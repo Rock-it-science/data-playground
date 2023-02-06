@@ -38,12 +38,19 @@ Other containers can now be started: `docker run -d -P -e COORDINATOR_NODE=172.1
 
 Now if we go to the admin panel for the coordinator we can see all of the nodes in the cluster!
 
-These ad-hoc docker commands have been rolled into a [docker-compose file](docker-compose.yml). This file contains variables to scale the cluster size: `docker-compose scale coordinator=1 member=4`.
+These ad-hoc docker commands have been rolled into a [docker-compose file](docker-compose.yml).
+Bring up the Docker container and scale to any number of member nodes using `docker-compose scale coordinator=1 member=4`.
 
 Run `docker-compose exec coordinator riak-admin cluster status` to check the membership status of the cluster.
 
 ## Proxy and Load Balancing (HAProxy)
 
 So now we have a cluster of nodes that replicate data with each-other. This is cool, but in a production system, you should have a single endpoint, not a list of possible nodes to hit. This can be handled with a load balancer to split traffic across our nodes.
+
+In the haproxy folder in this directory, there is a Dockerfile and a haproxy config file. These will be used automatically by the Riak docker-compose file, however the IPs and ports may need to be updated.
+
+The config file used is the one provided as an example on the riak docs: https://docs.riak.com/riak/kv/latest/configuring/load-balancing-proxy/index.html and edited following the setup docs for haproxy: https://www.haproxy.com/documentation/hapee/latest/configuration/config-sections/backend/
+
+Debug any errors inthe haproxy config by building the docker container with `docker build -t my-haproxy .` and test the config file with `docker run -it --rm --name haproxy-syntax-check my-haproxy haproxy -c -f /usr/local/etc/haproxy/haproxy.cfg`.
 
 

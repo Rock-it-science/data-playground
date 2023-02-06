@@ -3,8 +3,8 @@ services:
   coordinator:
     image: basho/riak-kv
     ports:
-      - "8087"
-      - "8098"
+      - "8087:8087"
+      - "8098:8098"
     environment:
       - CLUSTER_NAME=riakkv
     labels:
@@ -15,8 +15,8 @@ services:
   member:
     image: basho/riak-kv
     ports:
-      - "8087"
-      - "8098"
+      - "8187:8087"
+      - "8198:8098"
     labels:
       - "com.basho.riak.cluster.name=riak-kv"
     links:
@@ -29,13 +29,17 @@ services:
       - COORDINATOR_NODE=coordinator
   
   haproxy:
-    image: haproxy
+    image: haproxy:2.3
     container_name: haproxy
     depends_on:
      - coordinator
-    ports:
-     - "8098:8098"
+    # ports:
+    #  - "8098:8098"
+    #  - "8087:8087"
+    # expose:
+    #  - "8098"
+    #  - "8087"
     volumes:
-     - ./haproxy_riak.cfg:/usr/local/etc/haproxy/haproxy.cfg
+     - ./haproxy/haproxy_riak.cfg:/usr/local/etc/haproxy/haproxy.cfg
     networks:
      - default
