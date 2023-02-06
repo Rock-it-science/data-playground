@@ -10,7 +10,7 @@ public class haproxy_read_write {
     public static void main(String[] args) throws RiakException {
         // create a client (see Configuration below in this README for more details)
         System.out.println("Creating client");
-        IRiakClient riakClient = RiakFactory.httpClient("http://http://127.0.0.1:8098/riak");
+        IRiakClient riakClient = RiakFactory.httpClient("http://127.0.0.1:8098/riak");
 
         // create a new bucket
         System.out.println("Creating bucket");
