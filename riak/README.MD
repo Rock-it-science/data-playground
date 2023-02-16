@@ -8,13 +8,13 @@ Riak KV is a dynamo-style distributed database. Dynamo-style means it makes use 
 
 Set up a single node: `docker run --name=riak -d -p 8087:8087 -p 8098:8098 basho/riak-kv`
 
-    Note: the first port is for database client connection, the second is for Riak control web connection.
+    Note: the first port (8087) is the protocol buffer port and the second (8098) is for http connection.
 
 ### [Client Libraries](https://docs.riak.com/riak/kv/2.2.3/developing/client-libraries/index.html)
 
 My first choice of language is Python, but unfortunetely Riak is not compatible with Python >3.5 and version that old are no longer available to officially install anymore :'(
 
-For server-side and non-web work my next choice is Java, so let's give it a go.
+For server-side and non-web work my next choice is Java, so let's give that a go.
 
 Following the [quick setup guide](https://github.com/basho/riak-java-client/tree/1.4.4#quick-start) I was able to immediately starting inserting, querying, and deleting data from my node (see [quickstart.java](/riak/src/main/java/com/will/java_riak/quickstart.java) for the code)
 
@@ -53,4 +53,6 @@ The config file used is the one provided as an example on the riak docs: https:/
 
 Debug any errors inthe haproxy config by building the docker container with `docker build -t my-haproxy .` and test the config file with `docker run -it --rm --name haproxy-syntax-check my-haproxy haproxy -c -f /usr/local/etc/haproxy/haproxy.cfg`.
 
+Adding the HAProxy frontend IP to the [java sample](./src/main/java/com/will/java_riak/haproxy_read_write.java) code shows that we are able to interface with Riak through a single IP! And the admin panel also works through the HAProxy IP too.
 
+Current problem: seems to only be directing traffic to one node.? How to check for sure
