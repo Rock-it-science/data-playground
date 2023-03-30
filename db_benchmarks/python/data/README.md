@@ -1,0 +1,1 @@
+For the code I use this dataset from Kaggle: https://www.kaggle.com/datasets/austinreese/craigslist-carstrucks-data

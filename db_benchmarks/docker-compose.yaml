@@ -1,0 +1,46 @@
+version: '3.8'
+services:
+
+  # Relational
+  postgres:
+    image: postgres:14.1-alpine
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    ports:
+      - 1001:5432 # Port: <Host>:<Container>
+    volumes: 
+      - ./data/postgres:/var/lib/postgresql/data
+
+  mysql:
+    image: mysql
+    restart: always
+    command: --default-authentication-plugin=mysql_native_password
+    environment:
+      - MYSQL_ROOT_PASSWORD=pass
+      - MYSQL_DATABASE=mysql
+    ports:
+      - 1002:3306
+    volumes: 
+      - ./data/mysql:/var/lib/mysql
+  
+  # Document-based
+  mongodb:
+    image: mongo:latest
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass
+    ports:
+      - 1003:27017
+    volumes:
+      - ./data/mongo:/data/db
+  
+  # In-Memory
+  redis:
+    image: redis:6.2-alpine
+    restart: always
+    ports:
+      - 1004:6379
+    volumes: 
+      - ./data/redis:/data

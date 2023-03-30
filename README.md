@@ -2,6 +2,10 @@
 
 The purpose of this project is to experiment with database setups and learn about new database types and interfacing with them in new ways.
 
-## General Ideas
+## [DB Benchmarks](./db_benchmarks/)
 
-Compare read and write throughput of non-distributed vs distributed databases.
+Compare performance of difference database systems across different read and write scenarios.
+
+## [Riak](./riak/)
+
+My exploration of distributed databases.
