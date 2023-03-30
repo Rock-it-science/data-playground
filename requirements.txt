@@ -1,5 +1,6 @@
 psycopg2
 pymysql
+pymongo
 sqlalchemy
 pandas
 tqdm
